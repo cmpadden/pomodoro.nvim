@@ -1,4 +1,11 @@
-local M = { work_duration = 25 * 60, break_duration = 5 * 60, counter = nil, timer = nil, state = nil, previous_state = nil }
+local M = {
+    work_duration = 25 * 60,
+    break_duration = 5 * 60,
+    counter = nil,
+    timer = nil,
+    state = nil,
+    previous_state = nil,
+}
 
 local STATE_WORKING = 0
 local STATE_PAUSED = 1
@@ -60,16 +67,20 @@ function M.skip()
 end
 
 function M.render_popup_content()
-    return {
+    local content = {
         " Status: " .. STATE_MESSAGE_MAPPING[M.state],
         " " .. format_seconds(M.counter) .. " seconds remain",
     }
+    M.window.update(content)
+end
+
+function M.display_popup()
+    M.window.open_window()
+    M.render_popup_content()
 end
 
 function M.event_loop()
-    local content = M.render_popup_content()
-
-    M.window.update(content)
+    M.render_popup_content()
 
     if M.state == STATE_PAUSED then
         M.stop_timer()
@@ -81,6 +92,7 @@ function M.event_loop()
         if M.state == STATE_WORKING then
             M.state = STATE_BREAK
             M.counter = M.break_duration
+            M.display_popup()
         elseif M.state == STATE_BREAK then
             M.state = STATE_WORKING
             M.counter = M.work_duration
@@ -88,12 +100,11 @@ function M.event_loop()
     end
 end
 
-function M.init()
+function M.setup()
+    -- initialize pop-up window
     M.window = require("pomodoro.window")
-
     M.window.title = "pomodoro.nvim"
     M.window.subtitle = "[q]uit [s]tart [p]ause s[k]ip"
-
     M.window.mappings = {
         ["q"] = M.window.close_window,
         ["s"] = M.start,
@@ -101,12 +112,10 @@ function M.init()
         ["k"] = M.skip,
     }
 
-    M.window.open_window()
-
-    M.state = STATE_WORKING
+    -- initialize pomodoro
+    M.state = STATE_PAUSED
     M.counter = M.work_duration
+
+    -- define keymappings
+    vim.keymap.set("n", "<leader>p", M.display_popup, { desc = "Display the Pomodoro pop-up", remap = false })
 end
-
-M.init()
-
--- return M
