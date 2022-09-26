@@ -3,11 +3,31 @@
 
 Break your workflow into regular work-and-break intervals following the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).
 
-## Installation
+# Installation
+
+## vim-plug
+
+```vim
+Plug 'cmpadden/pomodoro.nvim'
+```
+
+## [Packer](https://github.com/wbthomason/packer.nvim)
+
+```lua
+use { "cmpadden/pomodoro.nvim" }
+```
+
+# Setup
+
+```lua
+require("pomodoro").setup()
+```
 
 ## Usage
 
-## Configuration
+The default keybinding to display the pomodoro pop-up is `<leader>p`.
+Here, you can use pre-defined bindings to start, pause, or skip a pomodoro work or break interval.
+Once a work interval has completed, the pop-up will automatically be displayed to inform you that it's break time!
 
 ## Motivation
 
