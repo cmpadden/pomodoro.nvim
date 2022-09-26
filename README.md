@@ -1,4 +1,5 @@
-# 🍅.nvim
+
+![pomdoro](https://user-images.githubusercontent.com/5807118/192365121-8d5c35e2-fd48-4954-83d9-2150f2c912ff.png)
 
 Break your workflow into regular work-and-break intervals following the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).
 
