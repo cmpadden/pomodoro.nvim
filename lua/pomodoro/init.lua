@@ -103,6 +103,7 @@ end
 function M.setup()
     -- initialize pop-up window
     M.window = require("pomodoro.window")
+
     M.window.title = "pomodoro.nvim"
     M.window.subtitle = "[q]uit [s]tart [p]ause s[k]ip"
     M.window.mappings = {
@@ -117,5 +118,7 @@ function M.setup()
     M.counter = M.work_duration
 
     -- define keymappings
-    vim.keymap.set("n", "<leader>p", M.display_popup, { desc = "Display the Pomodoro pop-up", remap = false })
+    vim.keymap.set("n", "<leader>p", M.display_popup, { desc = "Display the Pomodoro pop-up", silent = true })
 end
+
+return M
